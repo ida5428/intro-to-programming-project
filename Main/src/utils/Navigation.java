@@ -4,7 +4,7 @@ import static utils.Formatting.*;
 
 /**
  * The {@code Navigation} class handles the player's location throughout the game map in a 5x5 grid system.
- * Each tile corresponds to a location with a name, description, and other data such as if the player has already searched the location, if the location has a combat encounter, and if the location has a items.
+ * Each tile corresponds to a location with a name, description, and other data such as if the player has already searched the location, if the location has a combat encounter, and if the location has items.
  */
 public class Navigation {
 
@@ -12,8 +12,13 @@ public class Navigation {
 
    // Player's current location and coordinates
    private static int currentLocation = 00;
-   private static int playerX, playerY;
-   private static int characterLocationIndex;
+   private static int playerX, playerY, characterLocationIndex;
+
+   // Location features variables
+   private static final boolean[] restedLocations = new boolean[25];
+   private static final int[] locationSearchIndex = new int[25];
+   private static final boolean[] locationHasCombat = new boolean[25];
+   private static final int[] possibleCombatEncounters = new int[25];
 
    // Location names
    private static final String[] locationNames = {
@@ -22,43 +27,6 @@ public class Navigation {
       "Forest",          "Forest",          "River",      "River",          "Abandoned Camp",
       "Forest",          "Forest",          "Mountains",  "River",          "Mountains",
       "Abandoned Camp",  "Abandoned Camp",  "Caves",      "Mountains",      "Mountains"
-   };
-
-   // Different boolean arrayes used to keep track of the 'features' at that location - player may have visited the location and searched it but did not encounter an enemy
-   // Whether the player has rested at the location
-   private static final boolean[] restedLocations = {
-      false, false, true,  false, false,
-      false, false, true,  false, false,
-      false, false, true,  true,  false,
-      false, false, false, true,  false,
-      false, false, false, false, false
-   };
-
-   // Whether the location has searchable items - 0 = no items, 1 = searchable, 2 = story item search, 3 = npc location,9 = already searched
-   private static final int[] locationSearchIndex = {
-      2, 1, 0, 2, 3,
-      1, 0, 0, 2, 0,
-      2, 1, 0, 0, 2,
-      0, 0, 1, 2, 1,
-      2, 1, 2, 0, 2
-   };
-
-   // Whether the location has a combat encounter
-   private static final boolean[] locationHasCombat = {
-      false, false, true, false, false,
-      false, true,  true, true,  true,
-      true,  true,  true, true,  true,
-      true,  true,  true, true,  true,
-      true,  true,  true, true,  true
-   };
-
-   // The maximum number of possible combat encounters at the location
-   private static final int[] possibleCombatEncounters = {
-      0, 0, 3, 0, 0,
-      0, 1, 3, 1, 1,
-      1, 1, 3, 3, 2,
-      1, 1, 2, 2, 2,
-      1, 2, 2, 2, 2
    };
 
    // Descriptions of the locations
@@ -358,5 +326,51 @@ public class Navigation {
     */
    public static void updateLocationFightStatus() {
       locationHasCombat[characterLocationIndex] = false;
+   }
+
+   /**
+    * Resets variables associated to locations when the game restarts.
+    */
+   public static void resetLocationVariables() {
+      currentLocation = 00;
+
+      // Temporary arrays for initialization
+      boolean[] tempRestedLocations = {
+         false, false, true,  false, false,
+         false, false, true,  false, false,
+         false, false, true,  true,  false,
+         false, false, false, true,  false,
+         false, false, false, false, false
+      };
+
+      int[] tempLocationSearchIndex = {
+         2, 1, 0, 2, 3,
+         1, 0, 0, 2, 0,
+         2, 1, 0, 0, 2,
+         0, 0, 1, 2, 1,
+         2, 1, 2, 0, 2
+      };
+
+      boolean[] tempLocationHasCombat = {
+         false, false, true, false, false,
+         false, true,  true, true,  true,
+         true,  true,  true, true,  true,
+         true,  true,  true, true,  true,
+         true,  true,  true, true,  true
+      };
+
+      int[] tempPossibleCombatEncounters = {
+         0, 0, 3, 0, 0,
+         0, 1, 3, 1, 1,
+         1, 1, 3, 3, 2,
+         1, 1, 2, 2, 2,
+         1, 2, 2, 2, 2
+      };
+
+      // Copy the temporary arrays to the actual arrays
+      System.arraycopy(tempRestedLocations, 0, restedLocations, 0, 25);
+      System.arraycopy(tempLocationSearchIndex, 0, locationSearchIndex, 0, 25);
+      System.arraycopy(tempLocationHasCombat, 0, locationHasCombat, 0, 25);
+      System.arraycopy(tempPossibleCombatEncounters, 0, possibleCombatEncounters, 0, 25);
    }
 }

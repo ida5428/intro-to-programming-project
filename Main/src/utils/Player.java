@@ -197,7 +197,7 @@ public class Player {
                lineBreak();
                print(colour(BLUE, "Unknown Scientist") + ": \"We've been waiting for you. I'm Victor, my partners in another room unconcious.\"");
                lineBreak();
-               print(colour(BLUE, "Victor") + ": \"I've been trying to get into the bunker, but we have no power and " + colour(YELLOW, "wer'e missing the nuclear cores to run the backup reactor") + ". We won't last much longer out here with all the radiation.\"");
+               print(colour(BLUE, "Victor") + ": \"I've been trying to get into the bunker, but we have no power and " + colour(YELLOW, "we're missing the nuclear cores to run the backup reactor") + ". We won't last much longer out here with all the radiation.\"");
                lineBreak();
                print(colour(BLUE, "Victor") + ": \"Have you found any of the nuclear cores by any chance?\"");
                lineBreak();

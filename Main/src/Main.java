@@ -20,6 +20,7 @@ public class Main {
       do {
          boolean repeatOptions = true;
          boolean printSeperator = true;
+         Navigation.resetLocationVariables();
 
          // Generate a new player at the start of the while loop so that all player information is reset
          final Player playerCharacter = new Player(100, true); // Player is created without a name as it will be set later
